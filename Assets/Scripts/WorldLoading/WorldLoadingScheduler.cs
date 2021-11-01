@@ -7,12 +7,17 @@ using UnityEngine.SceneManagement;
 public class WorldLoadingScheduler : MonoBehaviour
 {
     [SerializeField]
+    private FlowChannel m_FlowChannel;
+    [SerializeField]
+    private FlowTrigger m_LoadingEndFlowTrigger;
+    [SerializeField]
     private UnityEvent<bool> m_OnLoadingStateChanged;
     [SerializeField]
     private UnityEvent m_OnGameWorldPostLoad;
 
-    private static List<AsyncOperation> ms_Operations = new List<AsyncOperation>();
-    private static bool ms_IsLoading = false;
+    private List<AsyncOperation> m_Operations = new List<AsyncOperation>();
+    private bool m_IsLoading = false;
+
     private static WorldLoadingScheduler ms_Instance = null;
 
     private void Awake()
@@ -22,15 +27,16 @@ public class WorldLoadingScheduler : MonoBehaviour
 
     private void Update()
     {
-        bool isLoading = ms_Operations.Any(x => !x.isDone);
-        if (ms_IsLoading != isLoading)
+        bool isLoading = m_Operations.Any(x => !x.isDone);
+        if (m_IsLoading != isLoading)
         {
-            ms_IsLoading = isLoading;
-            m_OnLoadingStateChanged?.Invoke(ms_IsLoading);
+            m_IsLoading = isLoading;
+            m_OnLoadingStateChanged?.Invoke(m_IsLoading);
 
-            if (!ms_IsLoading)
+            if (!m_IsLoading)
             {
-                ms_Operations.Clear();
+                m_FlowChannel.RaiseFlowTrigger(m_LoadingEndFlowTrigger);
+                m_Operations.Clear();
             }
         }
     }
@@ -53,13 +59,13 @@ public class WorldLoadingScheduler : MonoBehaviour
 
         gameWorldLoadOperation.completed += (x => m_OnGameWorldPostLoad.Invoke());
 
-        ms_Operations.Add(gameWorldLoadOperation);
-        ms_Operations.Add(hudLoadOperation);
+        m_Operations.Add(gameWorldLoadOperation);
+        m_Operations.Add(hudLoadOperation);
     }
 
     private void UnloadGameWorldInternal()
     {
-        ms_Operations.Add(SceneManager.UnloadSceneAsync("GameWorld"));
-        ms_Operations.Add(SceneManager.UnloadSceneAsync("HUDScene"));
+        m_Operations.Add(SceneManager.UnloadSceneAsync("GameWorld"));
+        m_Operations.Add(SceneManager.UnloadSceneAsync("HUDScene"));
     }
 }

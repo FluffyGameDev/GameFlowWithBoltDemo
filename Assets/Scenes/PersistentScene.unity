@@ -358,6 +358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 948678091}
   - component: {fileID: 948678092}
+  - component: {fileID: 948678093}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -391,6 +392,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8ad1f128bb341e48863f4f7056ae22a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_FlowChannel: {fileID: 11400000, guid: 8391b0cd5a9ba7e4c9bc5b6df4c03307, type: 2}
+  m_LoadingEndFlowTrigger: {fileID: 11400000, guid: f1c31e59f16b196429181f416277436b, type: 2}
   m_OnLoadingStateChanged:
     m_PersistentCalls:
       m_Calls:
@@ -406,6 +409,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  m_OnGameWorldPostLoad:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 948678093}
+        m_TargetAssemblyTypeName: SaveManager, SaveAssembly
+        m_MethodName: LoadGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &948678093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948678090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3324676e43617245aebe0bdc74d5532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SaveChannel: {fileID: 11400000, guid: 2c2accb3b8adc5c4eb87ec279676ab99, type: 2}
 --- !u!1 &1211881497
 GameObject:
   m_ObjectHideFlags: 0

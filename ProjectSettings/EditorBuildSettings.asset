@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InGameMenuScene.unity
     guid: 5f61457c0dc7dc243961a6da82419619
+  - enabled: 1
+    path: Assets/Scenes/FTUEScene.unity
+    guid: 87b9f6731ac07f44eb2fd4ffe455f0a4
   m_configObjects: {}

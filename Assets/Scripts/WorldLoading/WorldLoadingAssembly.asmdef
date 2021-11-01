@@ -1,7 +1,9 @@
 {
     "name": "WorldLoadingAssembly",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:e7d4352f6f6fce64fb014e8d78f28323"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
